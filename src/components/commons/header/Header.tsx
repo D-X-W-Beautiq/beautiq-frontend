@@ -10,9 +10,9 @@ const Header = ({back = false, text, right} : HeaderProps) => {
   return(
     <S.HeaderWrapper>
       {/* back이 true인 경우 back버튼을 만들고 false면 안만든다. => svg로 대체 해야 한다*/}
-      {back ? <div>"있음"</div> : null }
+      {back ? <S.BackIcon/> : <div/> }
       {text && <div>{text}</div>}
-      {right === "hambuger" ? "햄버거": right === "close" ? "닫힘" : null}
+      {right === "hambuger" ? <S.HamburgerIcon/> : right === "close" ? <S.CloseIcon/> : <div/>}
     </S.HeaderWrapper>
   );
 }
