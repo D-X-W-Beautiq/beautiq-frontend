@@ -26,6 +26,7 @@ const height = {
 };
 
 export const ButtonWrapper = styled.button<DefaultBtnPropTypes>`
+  all: unset;
   display: flex;
   align-items: center;
   justify-content: center;
