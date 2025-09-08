@@ -1,6 +1,5 @@
 import Button from "@components/commons/button/Button";
 import { useModal } from "@hooks/useModal";
-import React from "react";
 
 const ModalTestPage = () => {
   const { modalOpen } = useModal();
