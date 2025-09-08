@@ -32,7 +32,6 @@ export const ButtonWrapper = styled.button<DefaultBtnPropTypes>`
   justify-content: center;
 
   ${({ $size }) =>
-    $size &&
     `
     width: ${width[$size]};
     height: ${height[$size]};
