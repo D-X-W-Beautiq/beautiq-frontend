@@ -5,5 +5,8 @@ export interface ModalState {
   title: string;
   comment?: string;
   children?: React.ReactNode;
-  onConfirm?: () => void;
+  okText?: string;
+  okCallback?: () => void;
+  noText?: string;
+  noCallback?: () => void;
 }

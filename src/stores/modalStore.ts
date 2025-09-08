@@ -17,6 +17,10 @@ export const useModalStore = create<ModalStoreState>((set) => ({
   type: "alert",
   title: "",
   comment: undefined,
+  okText: "",
+  okCallback: undefined,
+  noText: "",
+  noCallback: undefined,
 
   openModal: (props) =>
     set({
@@ -30,6 +34,9 @@ export const useModalStore = create<ModalStoreState>((set) => ({
       title: "",
       comment: undefined,
       children: null,
-      onConfirm: undefined,
+      okText: "",
+      okCallback: undefined,
+      noText: "",
+      noCallback: undefined,
     }),
 }));

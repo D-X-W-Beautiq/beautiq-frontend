@@ -4,13 +4,29 @@ import { useModalStore } from "@stores/modalStore";
 import * as S from "./Modal.styled";
 
 const Modal = () => {
-  const { isOpen, title, comment, variant, type, children, onConfirm, closeModal } =
-    useModalStore();
+  const {
+    isOpen,
+    title,
+    comment,
+    variant,
+    type,
+    children,
+    okText,
+    okCallback,
+    noText,
+    noCallback,
+    closeModal,
+  } = useModalStore();
 
   if (!isOpen) return null;
 
   const handleConfirm = () => {
-    onConfirm?.();
+    okCallback?.();
+    closeModal();
+  };
+
+  const handleCancel = () => {
+    noCallback?.();
     closeModal();
   };
 
@@ -28,7 +44,7 @@ const Modal = () => {
             </S.ContentBox>
             <S.ButtonBox>
               <Button size="large" variant={variant} onClick={handleConfirm}>
-                확인
+                {okText || "확인"}
               </Button>
             </S.ButtonBox>
           </>
@@ -42,11 +58,11 @@ const Modal = () => {
               {comment && <S.Comment>{comment}</S.Comment>}
             </S.ContentBox>
             <S.ButtonBox>
-              <Button size="small" variant={variant} disabled onClick={closeModal}>
-                취소
+              <Button size="small" variant={variant} isInactive onClick={handleCancel}>
+                {noText || "취소"}
               </Button>
               <Button size="small" variant={variant} onClick={handleConfirm}>
-                확인
+                {okText || "확인"}
               </Button>
             </S.ButtonBox>
           </>

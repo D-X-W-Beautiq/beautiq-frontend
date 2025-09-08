@@ -22,6 +22,7 @@ export const ModalContainer = styled.div`
   padding: 3.2rem 1.6rem 2.4rem;
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 0.6rem;
+  box-sizing: border-box;
 `;
 
 export const ContentBox = styled.div`
@@ -35,16 +36,20 @@ export const ContentBox = styled.div`
 export const Title = styled.h2`
   ${getTypography("heading4")}
   color: ${({ theme }) => theme.colors.black};
+  margin: 0;
 `;
 
 export const Comment = styled.p`
   ${getTypography("caption1Medi")}
   color: ${({ theme }) => theme.colors.gray[400]};
+  margin: 0;
 `;
 
 export const ButtonBox = styled.div`
   display: flex;
   justify-content: space-between;
+
+  gap: 0.8rem;
 
   & > button {
     flex: 1;
