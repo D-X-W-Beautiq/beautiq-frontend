@@ -1,6 +1,6 @@
 import Header from "../components/commons/header/Header";
 
-function Testpage(){
+function Headerpage(){
     return (
         // return문 안에는 태그 2개 반환 못해서 div로 감싸줘야함
         <div>
@@ -15,8 +15,9 @@ function Testpage(){
             <Header left="back" />
             <Header left="back"  right="close"/>
 
+
         </div>
     );
 }
 
-export default Testpage;
+export default Headerpage;
