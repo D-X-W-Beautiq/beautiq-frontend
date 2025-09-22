@@ -2,6 +2,7 @@ import Header from "@components/commons/header/Header";
 
 import CardContainer from "./components/CardContainer/CardContainer";
 import RecentAnalysisCard from "./components/RecentAnalysisCard/RecentAnalysisCard";
+import TodayTip from "./components/TodayTip/TodayTip";
 import * as S from "./HomePage.styled";
 
 const HomePage = () => {
@@ -12,6 +13,7 @@ const HomePage = () => {
         <S.HomeImage />
         <CardContainer />
         <RecentAnalysisCard />
+        <TodayTip />
       </S.HomePageWrapper>
     </>
   );
