@@ -1,22 +1,22 @@
-import "react-datepicker/dist/react-datepicker.css";
-
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import dayjs, { Dayjs } from "dayjs";
 import { useState } from "react";
-import DatePicker from "react-datepicker";
 
-import * as S from "./Calendar.styled";
+import { StyledStaticDatePicker } from "./Calendar.styled";
+
+const theme = createTheme();
 
 const Calendar = () => {
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
+  const [selectedDate, setSelectedDate] = useState<Dayjs | null>(dayjs());
 
   return (
-    <S.CalendarWrapper>
-      <DatePicker
-        selected={startDate}
-        onChange={(date) => setStartDate(date)}
-        inline
-        formatWeekDay={(nameOfDay) => nameOfDay.substring(0, 1)}
+    <ThemeProvider theme={theme}>
+      <StyledStaticDatePicker
+        displayStaticWrapperAs="desktop"
+        value={selectedDate}
+        onChange={(newDate) => setSelectedDate(newDate)}
       />
-    </S.CalendarWrapper>
+    </ThemeProvider>
   );
 };
 
