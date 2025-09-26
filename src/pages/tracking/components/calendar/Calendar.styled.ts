@@ -1,40 +1,29 @@
-import styled from "@emotion/styled";
+import { styled } from "@mui/material/styles";
+import { StaticDatePicker } from "@mui/x-date-pickers/StaticDatePicker";
 
-import { getTypography } from "../../../../styles/typography";
+export const StyledStaticDatePicker = styled(StaticDatePicker)(({ theme }) => ({
+  // 달력 전체 컨테이너
+  width: "100%",
+  backgroundColor: theme.palette.background.paper,
+  borderRadius: "16px",
+  border: `1px solid ${theme.palette.divider}`,
 
-export const CalendarWrapper = styled.div`
-  width: 100%;
+  // 헤더 ('2025년 9월')
+  "& .MuiPickersCalendarHeader-label": {
+    fontWeight: 700,
+  },
 
-  .react-datepicker {
-    width: 100%;
-    border: none;
-  }
+  // 날짜(Day) 아이템
+  "& .MuiPickersDay-root": {
+    // 선택된 날짜
+    "&.Mui-selected": {
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.primary.contrastText,
+    },
+  },
 
-  .react-datepicker__month-container {
-    width: 100%;
-  }
-
-  .react-datepicker__header {
-    background-color: white;
-    border-bottom: none;
-  }
-
-  .react-datepicker__day-names,
-  .react-datepicker__week {
-    display: flex;
-    justify-content: space-around;
-  }
-
-  .react-datepicker__day-name,
-  .react-datepicker__day {
-    margin: 0.5rem;
-    ${getTypography("body1Long")};
-  }
-
-  .react-datepicker__day--outside-month {
-    color: #ccc; !important;
-    fill: ${({ theme }) => theme.colors.gray[100]};
-    pointer-events: none;
-  }
-
-`;
+  // 오늘 날짜
+  "& .MuiPickersDay-today": {
+    borderColor: theme.palette.primary.light,
+  },
+}));
