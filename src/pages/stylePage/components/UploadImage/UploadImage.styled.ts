@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { getTypography } from "@styles/typography";
 
 export const Wrap = styled.section`
   width: 100%;
@@ -8,23 +9,23 @@ export const Wrap = styled.section`
 `;
 
 export const Placeholder = styled.div`
-  width: 160px;
-  height: 160px;
-  border-radius: 16px;
-  background: #f3b8cc;
+  width: 16rem;            /* 160px */
+  height: 16rem;           /* 160px */
+  border-radius: 1.6rem;   /* 16px */
+  background: ${({ theme }) => theme.colors.primary[100]};
   display: grid;
   place-items: center;
 
   .cam {
-    font-size: 32px;
+    font-size: 3.2rem;     /* 32px */
     opacity: 0.85;
   }
 `;
 
 export const Preview = styled.div`
-  width: 160px;
-  height: 160px;
-  border-radius: 16px;
+  width: 16rem;            /* 160px */
+  height: 16rem;           /* 160px */
+  border-radius: 1.6rem;   /* 16px */
   position: relative;
   overflow: hidden;
 
@@ -36,53 +37,44 @@ export const Preview = styled.div`
 
   .remove {
     position: absolute;
-    top: 8px;
-    right: 8px;
-    width: 26px;
-    height: 26px;
+    top: 0.8rem;           /* 8px */
+    right: 0.8rem;         /* 8px */
+    width: 2.6rem;         /* 26px */
+    height: 2.6rem;        /* 26px */
     border-radius: 50%;
     border: none;
     background: #ffffffcc;
-    font-size: 18px;
+    font-size: 1.8rem;     /* 18px */
     cursor: pointer;
   }
 `;
 
 export const Hint = styled.p`
-  margin: 12px 0 16px;       /* 여백 살짝 키워 균형 */
-  font-size: 12px;
-  color: #a48996;
-  text-align: center;        /* 안내문 중앙정렬 */
+  margin: 1.2rem 0 1.6rem; /* 12px 0 16px */
+  font-size: 1.2rem;       /* 12px */
+  color: ${({ theme }) => theme.colors.neutral[700]};
+  text-align: center;      /* 안내문 중앙정렬 */
+  ${getTypography("caption2Medi")}
 `;
 
 export const BtnRow = styled.div`
-  width: 100%;                          /* 카드 내부 폭 꽉 채움 */
-  display: grid;                        /* 동일 너비 보장 */
+  width: 100%;                           /* 카드 내부 폭 꽉 채움 */
+  display: flex;                         /* 동일 너비 보장 */
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  gap: 1.0rem;                           /* 12px */
+
+  padding: 0 1rem;
+
+  justify-content: center;           /* 가운데 정렬 */
 
   /* 작은 화면에서는 1열로 쌓기 (옵션) */
-  @media (max-width: 360px) {
+  @media (max-width: 36rem) {            /* 360px */
     grid-template-columns: 1fr;
   }
 
-  button {
-    height: 44px;
-    width: 100%;
-    border-radius: 10px;
-    font-weight: 700;
-    font-size: 14px;
-    color: #fff;
-    background: #e91e63;
-    border: none;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
 
   /* label 안에 렌더링되는 버튼에도 동일 스타일 적용 */
   label > button {
-    width: 100%;
+    width: 13.6rem;
   }
 `;

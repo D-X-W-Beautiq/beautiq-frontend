@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { getTypography } from "@styles/typography";
 
 /* 전체 배경 → 흰색 */
 export const Screen = styled.div`
@@ -8,48 +9,47 @@ export const Screen = styled.div`
 
 /* 헤더: 타이틀 중앙, X 버튼 테두리 제거 */
 export const HeaderBar = styled.header`
-  height: 56px;
-  padding: 0 16px;
+  height: 5.6rem;                 /* 56px */
+  padding: 0 1.6rem;              /* 0 16px */
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  background: #ffe6ef;
-  border-bottom: 1px solid #f1e3ea;
+  background: ${({ theme }) => theme.colors.neutral[100]};
 
   .title {
     font-weight: 800;
-    font-size: 18px;
-    color: #e45c9c;
-    letter-spacing: -0.2px;
+    color: ${({ theme }) => theme.colors.primary[500]};
+    letter-spacing: -0.02rem;     /* -0.2px */
+    ${getTypography("heading3")}
   }
 
   .close {
     position: absolute;
-    right: 12px;
+    right: 1.2rem;                /* 12px */
     top: 50%;
     transform: translateY(-50%);
-    width: 36px;
-    height: 36px;
+    width: 3.6rem;                /* 36px */
+    height: 3.6rem;               /* 36px */
     display: grid;
     place-items: center;
     background: transparent;
     border: none;
     outline: none;
-    color: #e45c9c;
-    font-size: 20px;
+    color: ${({ theme }) => theme.colors.primary[500]};
+    font-size: 3.2rem;            /* 32px */
     cursor: pointer;
   }
 `;
 
 /* 본문: 업로드 영역을 살짝 더 위로 */
 export const Body = styled.main`
-  padding: 28px 16px 24px;       /* 필요 시 24~32px에서 미세조정 */
-  max-width: 360px;
+  padding: 1.2rem 1.6rem 2.4rem;  /* 12px 16px 24px */
+  max-width: 36rem;               /* 360px */
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 1rem;                      /* 10px */
 `;
 
 /* 섹션 경계 제거 */
@@ -63,18 +63,18 @@ export const Card = styled.section`
 
 /* 밑줄형 인풋: 피그마 '끝이 둥근 캡'을 배경 레이어로 정확 재현 */
 export const InputBlock = styled.div`
-  margin: 12px 0 24px;
+  margin: 1.2rem 0 2.4rem;        /* 12px 0 24px */
   position: relative;
-  padding-bottom: 16px; /* 캡 바 여유 */
+  padding-bottom: 1.6rem;         /* 16px - 캡 바 여유 */
 
   .label {
     position: absolute;
-    width: 1px;
-    height: 1px;
+    width: 0.1rem;                /* 1px */
+    height: 0.1rem;               /* 1px */
     padding: 0;
-    margin: -1px;
+    margin: -0.1rem;              /* -1px */
     overflow: hidden;
-    clip: rect(0,0,0,0);
+    clip: rect(0, 0, 0, 0);
     white-space: nowrap;
     border: 0;
   }
@@ -85,38 +85,21 @@ export const InputBlock = styled.div`
     content: "";
     position: absolute;
     bottom: 0;
-    height: 2px;
+    height: 0.2rem;               /* 2px */
     pointer-events: none;
   }
 
-  // /* 중앙 라인 */
-  // &::after {
-  //   left: 16px;                 /* 좌우 여백 */
-  //   right: 16px;
-  //   background: #f6cfe0;
-  //   border-radius: 1px;
-  // }
-
-  // /* 좌/우 캡을 반원으로 추가 */
-  // &::before {
-  //   left: 8px;
-  //   right: 8px;
-  //   height: 8px;                /* 반원 지름 */
-  //   background:
-  //     radial-gradient(circle at left bottom, #f6cfe0 60%, transparent 61%) left bottom / 8px 8px no-repeat,
-  //     radial-gradient(circle at right bottom, #f6cfe0 60%, transparent 61%) right bottom / 8px 8px no-repeat;
-  // }
-
   input {
     width: 100%;
-    height: 40px;
-    border:0;
-    border-bottom: 0.1rem solid #f6cfe0;       /* 기본 밑줄/테두리 제거 */
+    height: 4rem;                 /* 40px */
+    border: 0;
+    border-bottom: 0.1rem solid ${({ theme }) => theme.colors.primary[500]};
     background: transparent;
-    padding: 0 4px;
-    font-size: 14px;
-    border-radius: 0.6rem;
+    padding: 0 0.4rem;            /* 0 4px */
+    font-size: 1.4rem;            /* 14px */
+    border-radius: 0.6rem;        /* 6px */
     outline: none;
+    ${getTypography("body2NormalSemi")}
 
     &::placeholder {
       color: #bda8b3;
@@ -132,19 +115,20 @@ export const InputBlock = styled.div`
 
 /* '다음으로' 버튼: 원래 느낌 유지(테두리/그림자 X) */
 export const BottomBar = styled.div`
-  padding-bottom: 16px;
+  padding-bottom: 1.6rem;         /* 16px */
 
   button {
     width: 100%;
-    height: 48px;
-    border-radius: 12px;
-    background: #e45c9c;
-    color: #fff;
+    height: 4.8rem;               /* 48px */
+    border-radius: 1.2rem;        /* 12px */
+    background: ${({ theme }) => theme.colors.primary[500]};
+    color: ${({ theme }) => theme.colors.primary[0]};
     font-weight: 800;
-    font-size: 16px;
+    font-size: 1.6rem;            /* 16px */
     border: none;
     box-shadow: none;
     outline: none;
+    ${getTypography("body1NormalSemi")}
 
     &:focus,
     &:active {
