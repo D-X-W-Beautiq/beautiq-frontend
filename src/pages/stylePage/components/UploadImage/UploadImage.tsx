@@ -1,3 +1,4 @@
+import Button from "@components/commons/button/Button";
 import type { ContentsProps } from "@pages/stylePage/types";
 import React, { useEffect, useRef, useState } from "react";
 
@@ -17,7 +18,6 @@ const UploadImage: React.FC<UploadImageProps> = ({
   setContents,
   itemNumber,
   onUseExisting,
-  canUseExisting = false,
 }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -87,14 +87,11 @@ const UploadImage: React.FC<UploadImageProps> = ({
 
       {/* 버튼 2개: 동일 너비로 정렬 (UploadImage.styled.ts의 BtnRow와 매칭) */}
       <S.BtnRow>
-        <button type="button" onClick={onUseExisting} disabled={!canUseExisting}>
-          기존 사진 사용하기
-        </button>
-
-        <label htmlFor={`upload-input-${itemNumber}`} style={{ width: "100%" }}>
-          <button type="button" onClick={openFile} style={{ width: "100%" }}>
+        <Button size="small" onClick={onUseExisting}>기존 사진 사용하기</Button>
+        <label htmlFor={`upload-input-${itemNumber}`}>
+          <Button size="small" onClick={openFile} >
             새 사진 사용하기
-          </button>
+          </Button>
         </label>
 
         <input
