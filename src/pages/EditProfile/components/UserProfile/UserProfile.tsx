@@ -80,12 +80,8 @@ const UserProfile = () => {
           <S.InfoText>소셜 로그인 정보</S.InfoText>
           {tempData.provider === "kakao" ? "카카오 로그인" : "구글 로그인"}
         </S.UserInfo>
-
-        {/* TODO : 변경사항 제출용 임시 버튼 - 디자인 수정 필요 */}
-        <button onClick={handleSubmit} style={{ marginTop: "20px" }}>
-          저장하기
-        </button>
       </S.ProfileImageContainer>
+      <S.SaveButton onClick={handleSubmit}>저장하기</S.SaveButton>
     </S.ProfileWrapper>
   );
 };
