@@ -65,3 +65,15 @@ export const UserInfo = styled.div`
 
   ${getTypography("body2Long")};
 `;
+
+// TODO : 디자인 확정 후 수정 필요
+export const SaveButton = styled.button`
+  all: unset;
+
+  align-items: end;
+  margin-top: 1.2rem;
+
+  color: ${({ theme }) => theme.colors.primary[700]};
+
+  ${getTypography("body2Long")};
+`;
