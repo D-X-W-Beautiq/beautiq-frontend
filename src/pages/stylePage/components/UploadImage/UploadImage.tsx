@@ -28,12 +28,10 @@ const UploadImage: React.FC<UploadImageProps> = ({
   const openFile = () => inputRef.current?.click();
 
   const handleFile = (file: File) => {
-    // contents 상태에 파일 반영
     setContents((prev) =>
       prev.map((c) => (c.itemId === itemNumber ? { ...c, itemImage: file } : c))
     );
 
-    // 이전 미리보기 URL 정리 후 새 URL 생성
     setPreviewUrl((prev) => {
       if (prev) URL.revokeObjectURL(prev);
       return URL.createObjectURL(file);
@@ -51,22 +49,16 @@ const UploadImage: React.FC<UploadImageProps> = ({
     if (inputRef.current) inputRef.current.value = "";
   };
 
-  // 언마운트 시 미리보기 URL 정리
   useEffect(() => {
     return () => {
       if (previewUrl) URL.revokeObjectURL(previewUrl);
     };
   }, [previewUrl]);
 
-  // 현재 아이템 가져오기
   const targetItem = contents.find((c) => c.itemId === itemNumber);
+  const itemImage = targetItem?.itemImage as File | string | undefined | null;
+  const itemImageUrl = typeof itemImage === "string" ? itemImage : null;
 
-  // 서버/상태에서 온 itemImage가 string(URL)일 수도, File일 수도 있다고 가정
-const itemImage = targetItem?.itemImage as File | string | undefined | null;
-const itemImageUrl = typeof itemImage === "string" ? itemImage : null;
-
-
-  // 미리보기 우선 → 없으면 기존 URL
   const hasImage = Boolean(previewUrl || itemImageUrl);
 
   return (
@@ -80,34 +72,21 @@ const itemImageUrl = typeof itemImage === "string" ? itemImage : null;
             aria-label="이미지 삭제"
             type="button"
           >
-          <img
-            src="/svgs/icon-close.svg"
-            alt=""
-            aria-hidden
-            width={20}
-            height={20}
-            />
+            
+            <S.CloseIcon aria-hidden />
           </button>
         </S.Preview>
       ) : (
         <S.Placeholder>
-          <img
-            src="/svgs/icon-cam.svg"
-            alt=""
-            aria-hidden
-            className="cam"
-            width={62}
-            height={56}
-          />
+          
+          <S.CamIcon aria-hidden />
         </S.Placeholder>
-
       )}
 
       <S.Hint>* 얼굴이 정면으로 나온 사진을 사용해 주세요.</S.Hint>
 
-      {/* 액션 영역 */}
       <S.BtnRow>
-        <Button size="small" variant="line" onClick={onUseExisting}>
+        <Button size="small" variant="primary" onClick={onUseExisting}>
           기존 사진 사용하기
         </Button>
 
