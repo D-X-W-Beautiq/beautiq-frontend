@@ -2,6 +2,7 @@ import Layout from "@components/commons/layout/Layout";
 import EditProfile from "@pages/EditProfile/EditProfile";
 import HomePage from "@pages/home/HomePage";
 import MyPage from "@pages/my/MyPage";
+import RecommendProductPage from "@pages/recommendProduct/RecommendProduct";
 import RecommendStylePage from "@pages/RecommendStyle/RecommendStylePage";
 import StyleRecommandPage from "@pages/stylePage/StyleRecommandPage";
 import TrackingPage from "@pages/tracking/TrackingPage";
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
       { path: "my/recommend-style", element: <RecommendStylePage /> },
       { path: "style/recommend", element: <StyleRecommandPage /> },
       { path: "tracking", element: <TrackingPage /> },
+      { path: "detail/recommend-product/:analysisId", element: <RecommendProductPage /> },
     ],
   },
   { path: "*", element: <Navigate to="/home" replace /> },
