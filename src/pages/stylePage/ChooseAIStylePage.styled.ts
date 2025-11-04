@@ -65,7 +65,7 @@ export const GuideText = styled.p`
   text-align: center;
   color: ${({ theme }) => theme.colors.neutral[900]};
   margin: 0;
-  ${getTypography("body2Long")}
+  ${getTypography("body1NormalMedi")}
 `;
 
 /* ✅ 타일 고정 사이즈 131px × 131px, 2×2 그리드 */
