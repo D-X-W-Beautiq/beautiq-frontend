@@ -7,7 +7,7 @@ type Props = {
   userName?: string;
 };
 
-const StyleRecommendLoadingPage: React.FC<Props> = ({ userName = "ooo" }) => {
+const StyleRecommendLoadingPage: React.FC<Props> = ({ userName = "사용자" }) => {
   return (
     <S.Screen>
       <Header left="back" text="스타일 추천"  />

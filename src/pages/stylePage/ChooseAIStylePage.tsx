@@ -1,45 +1,38 @@
 import Button from "@components/commons/button/Button";
 import Header from "@components/commons/header/Header";
 import type { ContentsProps, ItemProps } from "@pages/stylePage/types";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import * as S from "./ChooseAIStylePage.styled";
 
-const ChooseAIStylePage: React.FC = () => {
-  // URL 목록은 한 번만 생성
-  const presetUrls = useMemo(
-    () => [
+  const DEFAULT_ITEM_INFO: ItemProps = { name: "", content: "", category: "" };
+
+  const presetUrls = [
       {
-        imgaeName: "sample1",
+        imageName: "sample1",
         url: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?q=80&w=800&auto=format&fit=crop",
       },
       {
-        imgaeName: "sample2",
+        imageName: "sample2",
         url: "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?q=80&w=800&auto=format&fit=crop",
       },
       {
-        imgaeName: "sample3",
+        imageName: "sample3",
         url: "https://images.unsplash.com/photo-1540206276207-3af25c08abc4?q=80&w=800&auto=format&fit=crop",
       },
-    ],
-    []
-  );
+    ];
 
-  const defaultItemInfo: ItemProps = useMemo(
-    () => ({ name: "", content: "", category: "" }),
-    []
-  );
+const ChooseAIStylePage: React.FC = () => {
+  // URL 목록은 한 번만 생성
+  
 
   // itemId 1~3: URL, 4: 업로드 타일
-  const initial: ContentsProps[] = useMemo(
-    () => [
-      { itemId: 1, itemImage: presetUrls[0].url, itemInfo: defaultItemInfo },
-      { itemId: 2, itemImage: presetUrls[1].url, itemInfo: defaultItemInfo },
-      { itemId: 3, itemImage: presetUrls[2].url, itemInfo: defaultItemInfo },
-      { itemId: 4, itemImage: undefined, itemInfo: defaultItemInfo },
-    ],
-    [presetUrls, defaultItemInfo]
-  );
+  const initial: ContentsProps[] = [
+      { itemId: 1, itemImage: presetUrls[0].url, itemInfo: DEFAULT_ITEM_INFO },
+      { itemId: 2, itemImage: presetUrls[1].url, itemInfo: DEFAULT_ITEM_INFO },
+      { itemId: 3, itemImage: presetUrls[2].url, itemInfo: DEFAULT_ITEM_INFO},
+      { itemId: 4, itemImage: undefined, itemInfo: DEFAULT_ITEM_INFO },
+    ]
 
   const [contents, setContents] = useState<ContentsProps[]>(initial);
 
@@ -95,8 +88,16 @@ const ChooseAIStylePage: React.FC = () => {
   // 다음으로 버튼 활성화 조건:
   // - selectedId가 1,2,3 중 하나면 OK
   // - selectedId가 4면 업로드된 이미지가 있어야 OK
-  const canNext =
-    selectedId !== null && (selectedId !== 4 || (selectedId === 4 && uploaded4));
+  
+  const canNext = selectedId && (selectedId !== 4 || uploaded4);
+
+  const handleClickUpload = () => {
+    if (!uploaded4) {
+      openFile();
+    }
+    setSelectedId(4);
+  }
+
 
   return (
     <>
@@ -137,17 +138,11 @@ const ChooseAIStylePage: React.FC = () => {
             tabIndex={0}
             selected={selectedId === 4}
             className={previewUrl ? "hasImage" : ""}
-            onClick={() => {
-              // 업로드 이미지를 아직 안 골랐으면 파일 선택창 열기
-              if (!uploaded4) openFile();
-              // 이미 업로드가 되어 있다면 선택 토글만 처리
-              setSelectedId(4);
-            }}
+            onClick={handleClickUpload}
+
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === " ") {
-                if (!uploaded4) openFile();
-                setSelectedId(4);
-              }
+               handleClickUpload();}
             }}
             aria-label="사진 업로드"
           >
