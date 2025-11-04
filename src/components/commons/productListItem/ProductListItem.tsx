@@ -29,6 +29,7 @@ const ProductListItem = ({ product, reason }: ListItemProps) => {
 
   return (
     <S.RecommendProductWrapper>
+<<<<<<< HEAD
       <S.RecommendProductContainer>
         <S.ProductImage src={product?.imageUrl} alt="Product" />
         <S.ProductInfo>
@@ -46,6 +47,17 @@ const ProductListItem = ({ product, reason }: ListItemProps) => {
         <S.WandIcon />
         <S.ReasonText>AI 추천 코멘트: {reason}</S.ReasonText>
       </S.RecommendReason>
+=======
+      <S.ProductImage src="https://avatars.githubusercontent.com/u/101495452?v=4" alt="Product" />
+      <S.ProductInfo>
+        <S.ProductText className="title">Sample Product Name</S.ProductText>
+        <S.ProductText>Sample Product Name</S.ProductText>
+        <S.ReviewText>⭐ 3.3 (리뷰 39)</S.ReviewText>
+      </S.ProductInfo>
+      <S.LikeButton>
+        <S.HeartIcon />
+      </S.LikeButton>
+>>>>>>> f65c274 (Design: 리스트 아이템 디자인 수정)
     </S.RecommendProductWrapper>
   );
 };
