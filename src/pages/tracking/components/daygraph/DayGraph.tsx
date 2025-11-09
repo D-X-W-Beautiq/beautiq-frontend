@@ -64,18 +64,18 @@ const data1 = {
 const DayGraph = () => {
   const theme = useTheme();
 
-  // 이번달 평균 점수에 따른 텍스트를 계산하는 함수 
+  // 이번달 평균 점수에 따른 텍스트를 계산하는 함수
   const getScoreStatusText = (score: number) => {
-    if (score >= 80){
+    if (score >= 80) {
       return "양호";
     }
-    if (score >= 60){
+    if (score >= 60) {
       return "주의";
     }
     return "위험";
   };
 
-  // 날짜별, 년도 제거 
+  // 날짜별, 년도 제거
   const formattedData = data.within60Days.map((item) => ({
     ...item,
     dayDate: item.dayDate.substring(5), // "09-06"
