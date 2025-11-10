@@ -12,6 +12,7 @@ const RecommendProductPage = () => {
     <>
       <Header left="back" text="제품 추천" />
       <S.RecommendProductWrapper>
+        {/* TODO : 정렬 UI 퍼블리싱 및 API 연결 */}
         {ProductList.map((item) => (
           <ProductListItem
             key={item.productId}
