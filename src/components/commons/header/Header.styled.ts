@@ -6,29 +6,30 @@ import { getTypography } from "../../../styles/typography";
 // 헤더 전체 래퍼
 export const HeaderWrapper = styled.div`
   ${getTypography("heading3")};
-  background-color: ${({ theme }) => theme.colors.neutral[100]};
-  color: ${({ theme }) => theme.colors.primary[500]};
-
-  width: 100%;
-  height: 5.6rem; /* 56px */
-  padding: 1.2rem; /* 12px */
 
   position: sticky;
   top: 0;
   z-index: 10;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   box-sizing: border-box;
+  width: 100%;
+  height: 5.6rem; /* 56px */
+  padding: 1.2rem; /* 12px */
+
+  color: ${({ theme }) => theme.colors.primary[500]};
+
+  background-color: ${({ theme }) => theme.colors.neutral[100]};
 `;
 
 export const IconButton = styled.button`
-  all: unset;
-  cursor: pointer;
-
   display: flex;
   align-items: center;
   justify-content: center;
+
+  cursor: pointer;
+  all: unset;
 
   &:focus {
     outline: none;
@@ -37,8 +38,12 @@ export const IconButton = styled.button`
 
 // 뒤로가기 아이콘
 export const BackIcon = styled(IconBack)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 3.2rem; /* 32px */
   height: 3.2rem; /* 32px */
+
   fill: ${({ theme }) => theme.colors.primary[100]};
 `;
 
@@ -46,6 +51,7 @@ export const BackIcon = styled(IconBack)`
 export const BeautiqIcon = styled(IconBeautiq)`
   width: 8.2rem; /* 82px */
   height: 3.2rem; /* 32px */
+
   fill: ${({ theme }) => theme.colors.primary[100]};
 `;
 
@@ -53,6 +59,7 @@ export const BeautiqIcon = styled(IconBeautiq)`
 export const HamburgerIcon = styled(IconHamburger)`
   width: 3.2rem; /* 32px */
   height: 3.2rem; /* 32px */
+
   fill: ${({ theme }) => theme.colors.primary[100]};
 `;
 
@@ -61,6 +68,7 @@ export const CloseIcon = styled(IconClose)`
   width: 2.4rem; /* 24px */
   height: 2.4rem; /* 24px */
   padding: 0.4rem; /* 4px */
+
   fill: ${({ theme }) => theme.colors.primary[100]};
 `;
 
