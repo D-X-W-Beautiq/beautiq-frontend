@@ -5,9 +5,11 @@ import HomePage from "@pages/home/HomePage";
 import MyPage from "@pages/my/MyPage";
 import RecommendProductPage from "@pages/recommendProduct/RecommendProduct";
 import RecommendStylePage from "@pages/RecommendStyle/RecommendStylePage";
+import StyleCustomizingPage from "@pages/styleCustomizing/StyleCustomizingPage";
 import ChooseAIStylePage from "@pages/stylePage/ChooseAIStylePage";
 import StyleRecommandPage from "@pages/stylePage/StyleRecommandPage";
 import StyleRecommendLoadingPage from "@pages/stylePage/StyleRecommendLoadingPage";
+import StyleResultPage from "@pages/styleResult/StyleResultPage";
 import TrackingPage from "@pages/tracking/TrackingPage";
 import WishListPage from "@pages/wishList/WishList";
 import { createBrowserRouter, Navigate } from "react-router-dom";
@@ -29,6 +31,8 @@ const router = createBrowserRouter([
       { path: "detail/recommend-product/:analysisId", element: <RecommendProductPage /> },
       { path: "style/ai", element: <ChooseAIStylePage /> },
       { path: "style/loading", element: <StyleRecommendLoadingPage /> },
+      { path: "styleResult", element: <StyleResultPage /> },
+      { path: "style/customizing", element: <StyleCustomizingPage /> },
     ],
   },
   { path: "*", element: <Navigate to="/home" replace /> },
