@@ -5,6 +5,7 @@ import HomePage from "@pages/home/HomePage";
 import MyPage from "@pages/my/MyPage";
 import RecommendProductPage from "@pages/recommendProduct/RecommendProduct";
 import RecommendStylePage from "@pages/RecommendStyle/RecommendStylePage";
+import StyleCustomizingPage from "@pages/styleCustomizing/StyleCustomizingPage";
 import ChooseAIStylePage from "@pages/stylePage/ChooseAIStylePage";
 import StyleRecommandPage from "@pages/stylePage/StyleRecommandPage";
 import StyleRecommendLoadingPage from "@pages/stylePage/StyleRecommendLoadingPage";
@@ -31,6 +32,7 @@ const router = createBrowserRouter([
       { path: "style/ai", element: <ChooseAIStylePage /> },
       { path: "style/loading", element: <StyleRecommendLoadingPage /> },
       { path: "styleResult", element: <StyleResultPage /> },
+      { path: "style/customizing", element: <StyleCustomizingPage /> },
     ],
   },
   { path: "*", element: <Navigate to="/home" replace /> },
