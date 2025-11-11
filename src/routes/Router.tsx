@@ -3,6 +3,7 @@ import EditProfile from "@pages/EditProfile/EditProfile";
 import HomePage from "@pages/home/HomePage";
 import MyPage from "@pages/my/MyPage";
 import RecommendStylePage from "@pages/RecommendStyle/RecommendStylePage";
+import StyleCustomizingPage from "@pages/styleCustomizing/StyleCustomizingPage";
 import StyleRecommandPage from "@pages/stylePage/StyleRecommandPage";
 import StyleResultPage from "@pages/styleResult/StyleResultPage";
 import TrackingPage from "@pages/tracking/TrackingPage";
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
       { path: "style/recommend", element: <StyleRecommandPage /> },
       { path: "tracking", element: <TrackingPage /> },
       { path: "styleResult", element: <StyleResultPage /> },
+      { path: "style/customizing", element: <StyleCustomizingPage /> },
     ],
   },
   { path: "*", element: <Navigate to="/home" replace /> },
