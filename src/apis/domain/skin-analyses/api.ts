@@ -1,4 +1,4 @@
-import { post } from "@apis/index";
+import { get, post } from "@apis/index";
 import type { components } from "@custom-types/api/schema";
 import type { ApiResponseType } from "@custom-types/commonType";
 import type { AxiosResponse } from "axios";
@@ -15,6 +15,22 @@ export const postPerformance = async (imageFile: File): Promise<SkinAnalysisResp
     const response: AxiosResponse<ApiResponseType<SkinAnalysisResponse>> = await post(
       "/skin-analyses",
       formData
+    );
+
+    return response.data.data;
+  } catch (error) {
+    console.error("error", error);
+    return null;
+  }
+};
+
+// 피부 분석 결과 조회
+export const getSkinAnalysisResult = async (
+  analysisId: string
+): Promise<SkinAnalysisResponse | null> => {
+  try {
+    const response: AxiosResponse<ApiResponseType<SkinAnalysisResponse>> = await get(
+      `/skin-analyses/${analysisId}`
     );
 
     return response.data.data;
