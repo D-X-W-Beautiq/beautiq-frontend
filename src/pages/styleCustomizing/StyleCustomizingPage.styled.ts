@@ -11,6 +11,8 @@ import {
 export const Screen = styled.div`
   min-height: 100vh;
   background-color: ${({ theme }) => theme.colors.white};
+  display: flex;
+  flex-direction: column;
 `;
 
 /** (공통 헤더에서 쓰는 아이콘 크기만 맞춰둠) */
@@ -23,16 +25,15 @@ export const CloseIcon = styled(RawCloseIcon)`
   height: 2.2rem;
 `;
 
-/** 본문 */
 export const Body = styled.main`
-  max-width: 30rem;
-  margin: auto;
   padding: 1.6rem 1.6rem 2.4rem;
+
   height: 100dvh;
   max-height: 70.2rem;
+
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center;        /* 내부 컨텐츠 중앙 정렬 */
 `;
 
 /** 이미지 미리보기 */
