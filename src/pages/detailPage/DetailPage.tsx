@@ -1,6 +1,7 @@
 import Header from "@components/commons/header/Header";
 import * as S from "@pages/detailPage/DetailPage.styled";
-import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   Bar,
   BarChart,
@@ -68,6 +69,13 @@ const data = {
 
 const DetailPage = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!location.state) {
+      navigate("/tracking");
+    }
+  }, [location.state, navigate]);
 
   // 각 피부 점수에 따른 텍스트 변화 시키는 함수
   const getScoreStatusText = (score: number) => {
@@ -94,7 +102,7 @@ const DetailPage = () => {
 
   return (
     <>
-      <Header left="back" text={location.state.dateStr + " 분석결과"} />
+      <Header left="back" text={location.state?.dateStr + " 분석결과"} />
 
       <S.ScoreBoardWrapper>
         {scoreItems.map(({ label, key }) => {
