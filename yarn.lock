@@ -746,6 +746,9 @@
     yaml-ast-parser "0.0.43"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> bc05099 (Rename: 폴더명 오타 수정)
 "@reduxjs/toolkit@1.x.x || 2.x.x":
   version "2.10.0"
   resolved "https://registry.yarnpkg.com/@reduxjs/toolkit/-/toolkit-2.10.0.tgz#de8f805a2e03a648eff5115206d2a19568ac2002"
