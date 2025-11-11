@@ -1,56 +1,48 @@
 import styled from "@emotion/styled";
 import { getTypography } from "@styles/typography";
 
-import { IconBack as RawBackIcon, IconClose as RawCloseIcon } from "../../assets/svgs";
+import {
+  IconBack as RawBackIcon,
+  IconBefore as RawBeforeIcon,
+  IconClose as RawCloseIcon,
+} from "../../assets/svgs";
 
 export const Screen = styled.div`
   min-height: 100vh;
-  background: #fff;
+  background-color: ${({ theme }) => theme.colors.white};
 `;
 
-export const HeaderBar = styled.header`
-  height: 5.6rem;
-  padding: 0 1.2rem;
-  display: grid;
-  grid-template-columns: 3.6rem 1fr 3.6rem;
-  align-items: center;
-  background: ${({ theme }) => theme.colors.neutral[100]};
-
-  .title {
-    text-align: center;
-    font-weight: 800;
-    color: ${({ theme }) => theme.colors.primary[500]};
-    ${getTypography("heading3")}
-  }
-  .nav {
-    width: 3.6rem; height: 3.6rem;
-    display: grid; place-items: center;
-    border: none; background: transparent;
-    cursor: pointer;
-  }
+export const BackIcon = styled(RawBackIcon)`
+  width: 2.4rem;
+  height: 2.4rem;
+`;
+export const CloseIcon = styled(RawCloseIcon)`
+  width: 2.2rem;
+  height: 2.2rem;
 `;
 
-export const BackIcon = styled(RawBackIcon)`width:2.4rem;height:2.4rem;`;
-export const CloseIcon = styled(RawCloseIcon)`width:2.2rem;height:2.2rem;`;
-
+/** 본문을 헤더 제외 전체 높이로 잡아서 하단 버튼이 아래에 붙도록 */
 export const Body = styled.main`
-  padding: 1.2rem 1.6rem 2.4rem;
-  max-width: 36rem;
-  margin: 0 auto;
+  max-width: 30rem;
+  margin: auto;
+  padding: 1.6rem 1.6rem 2.4rem;
+  height: 100dvh;
+  max-height: 70.2rem;
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
+  align-items: center;
 `;
 
 export const PreviewWrap = styled.div`
   display: flex;
   justify-content: center;
+  margin-top: 0.4rem;
 `;
 
 export const ImageBox = styled.div`
   position: relative;
-  width: 28.8rem;
-  height: 28.8rem;
+  width: 30rem;
+  height: 40rem;
   border-radius: 0.8rem;
   overflow: hidden;
   display: grid;
@@ -80,28 +72,37 @@ export const OriginalPeekBtn = styled.button`
   height: 3.6rem;
   border-radius: 50%;
   border: none;
-  background: rgba(0,0,0,0.88);
+  background: transparent; /* 아이콘만 보이도록 */
   display: grid;
   place-items: center;
   cursor: pointer;
-  opacity: 0.95;
+  transition: transform 0.1s ease;
 
-  &:active { transform: scale(0.98); }
+  &:active {
+    transform: scale(0.96);
+  }
 `;
 
-export const PeekIcon = styled.span`
-  display: inline-block;
-  width: 1.6rem; height: 1.6rem;
-  border-left: 0.16rem solid #fff;
-  border-right: 0.16rem solid #fff;
-  transform: skewX(-12deg);
+export const PeekIcon = styled(RawBeforeIcon)`
+  width: 2rem;
+  height: 2rem;
+  display: block;
 `;
 
 export const Caption = styled.p`
   text-align: center;
-  color: ${({ theme }) => theme.colors.gray[800]};
-  ${getTypography("body2NormalSemi")}
-  strong { color: ${({ theme }) => theme.colors.primary[600]}; font-weight: 800; }
+  color: ${({ theme }) => theme.colors.black};
+  margin: 0.1rem 0 0; /* 👈 아래 여백 완전히 제거 */
+  ${getTypography("body2NormalSemi")};
+
+  strong {
+    color: ${({ theme }) => theme.colors.black};
+  }
+`;
+
+/** 하단 고정 영역 */
+export const Footer = styled.div`
+  margin-top: auto; 👈 버튼을 글씨에 거의 붙게 */
 `;
 
 export const ActionRow = styled.div`
@@ -110,14 +111,17 @@ export const ActionRow = styled.div`
   gap: 1.2rem;
 `;
 
-export const SecondaryBtn = styled.button`
+export const SecondaryBtn = styled.button<{ disabled?: boolean }>`
   height: 5.2rem;
   border-radius: 0.8rem;
-  border: 0.1rem solid ${({ theme }) => theme.colors.primary[300]};
   background: ${({ theme }) => theme.colors.primary[0]};
-  color: ${({ theme }) => theme.colors.primary[400]};
-  font-weight: 800;
-  ${getTypography("body2NormalSemi")}
+  color: ${({ theme }) => theme.colors.gray[200]};
+  ${getTypography("body2NormalSemi")};
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 `;
 
 export const PrimaryBtn = styled.button`
@@ -126,11 +130,13 @@ export const PrimaryBtn = styled.button`
   border: none;
   background: ${({ theme }) => theme.colors.primary[500]};
   color: ${({ theme }) => theme.colors.primary[0]};
-  font-weight: 800;
   ${getTypography("body2NormalSemi")}
 `;
 
-export const SaveBar = styled.div` margin-top: 0.4rem; `;
+export const SaveBar = styled.div`
+  margin-top: 1rem;
+`;
+
 export const SaveBtn = styled.button`
   width: 100%;
   height: 5.6rem;
@@ -138,6 +144,6 @@ export const SaveBtn = styled.button`
   border: none;
   background: ${({ theme }) => theme.colors.primary[500]};
   color: ${({ theme }) => theme.colors.primary[0]};
-  font-weight: 800;
   ${getTypography("body1NormalSemi")}
 `;
+
