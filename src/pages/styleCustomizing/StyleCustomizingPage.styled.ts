@@ -4,6 +4,7 @@ import { getTypography } from "@styles/typography";
 import {
   IconBack as RawBackIcon,
   IconBefore as RawBeforeIcon,
+  IconCategory as RawCategoryIcon,
   IconClose as RawCloseIcon,
 } from "../../assets/svgs";
 
@@ -11,6 +12,8 @@ import {
 export const Screen = styled.div`
   min-height: 100vh;
   background-color: ${({ theme }) => theme.colors.white};
+  display: flex;
+  flex-direction: column;
 `;
 
 /** (공통 헤더에서 쓰는 아이콘 크기만 맞춰둠) */
@@ -23,16 +26,13 @@ export const CloseIcon = styled(RawCloseIcon)`
   height: 2.2rem;
 `;
 
-/** 본문 */
 export const Body = styled.main`
-  max-width: 30rem;
-  margin: auto;
   padding: 1.6rem 1.6rem 2.4rem;
   height: 100dvh;
   max-height: 70.2rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center;        /* 내부 컨텐츠 중앙 정렬 */
 `;
 
 /** 이미지 미리보기 */
@@ -113,11 +113,19 @@ export const CategoryBtn = styled.button<{ active?: boolean }>`
     active ? theme.colors.primary[400] : theme.colors.primary[50]};
   color: ${({ theme, active }) =>
     active ? theme.colors.white : theme.colors.primary[400]};
-  box-shadow: ${({ active }) => (active ? "0 4px 10px rgba(237, 71, 133, 0.25)" : "none")};
-  transition: transform 0.1s ease, background 0.2s ease;
+  box-shadow: ${({ active }) =>
+    active ? "0 4px 10px rgba(237, 71, 133, 0.25)" : "none"};
+  transition: transform 0.1s ease, background 0.2s ease, color 0.2s ease;
   &:active {
     transform: scale(0.97);
   }
+`;
+
+/** ✅ 버튼 안에 들어갈 카테고리 아이콘 (currentColor 사용) */
+export const IconCategory = styled(RawCategoryIcon)`
+  width: 2rem;
+  height: 2rem;
+  display: block;
 `;
 
 export const CategoryLabel = styled.div`
@@ -135,11 +143,12 @@ export const ControlWrap = styled.div`
 
 /** 하단 버튼(공통 Button 컴포넌트와 배치만 제공) */
 export const Footer = styled.div`
-  margin: auto; /* 👉 버튼을 아래로 밀착 */
+  margin: auto; /* 기존 로직 유지 */
   place-items: center;
   width: 100%;
 `;
 
 export const SaveBar = styled.div`
   margin-top: 1.2rem;
+  ${getTypography("body1NormalSemi")}
 `;
