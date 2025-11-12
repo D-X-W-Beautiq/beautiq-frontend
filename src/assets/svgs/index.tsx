@@ -5,6 +5,7 @@ export { default as IconBefore } from "./IconBefore";
 export { default as IconBubbles } from "./IconBubbles";
 export { default as IconCalenderBottomBar } from "./IconCalenderBottomBar";
 export { default as IconCam } from "./IconCam";
+export { default as IconCategory } from "./IconCategory";
 export { default as IconClose } from "./IconClose";
 export { default as IconFaceGraph } from "./IconFaceGraph";
 export { default as IconGoogleRound } from "./IconGoogleRound";
@@ -15,4 +16,3 @@ export { default as IconKakaoRound } from "./IconKakaoRound";
 export { default as IconLipstick } from "./IconLipstick";
 export { default as IconLotionBottle } from "./IconLotionBottle";
 export { default as IconWand } from "./IconWand";
-
