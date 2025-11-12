@@ -1,68 +1,106 @@
+import type {
+  SixtyDaySkinPointsResponse,
+  YearlyDaySkinPointsResponse,
+} from "@apis/domain/skin-analysis/api";
+import {
+  getSkinAnalysisTrends60Days,
+  getSkinAnalysisTrendsYearly,
+} from "@apis/domain/skin-analysis/api";
 import { useTheme } from "@emotion/react";
 import * as S from "@pages/tracking/components/daygraph/DayGraph.styled";
+import { useEffect, useState } from "react";
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 
-const data = {
-  within60Days: [
-    {
-      dayDate: "2025-09-06",
-      point: 0,
-    },
-    {
-      dayDate: "2025-09-07",
-      point: 80,
-    },
-    // 아래있는 데이터를 주석 처리 하면 60일 내에 4회 이상의 피부 측정 기록이 나옵니다.
-    {
-      dayDate: "2025-09-08",
-      point: 60,
-    },
-    {
-      dayDate: "2025-09-09",
-      point: 100,
-    },
-    {
-      dayDate: "2025-09-10",
-      point: 80,
-    },
-  ],
-  currentMonth: {
-    monthDate: "2D025-09",
-    point: 80,
-    // point: 60,
-    // point: 40,
-  },
-};
+// const data = {
+//   within60Days: [
+//     {
+//       dayDate: "2025-09-06",
+//       point: 0,
+//     },
+//     {
+//       dayDate: "2025-09-07",
+//       point: 80,
+//     },
+//     // 아래있는 데이터를 주석 처리 하면 60일 내에 4회 이상의 피부 측정 기록이 나옵니다.
+//     {
+//       dayDate: "2025-09-08",
+//       point: 60,
+//     },
+//     {
+//       dayDate: "2025-09-09",
+//       point: 100,
+//     },
+//     {
+//       dayDate: "2025-09-10",
+//       point: 80,
+//     },
+//   ],
+//   currentMonth: {
+//     monthDate: "2D025-09",
+//     point: 80,
+//     // point: 60,
+//     // point: 40,
+//   },
+// };
 
-const data1 = {
-  yearlyHistory: [
-    {
-      monthDate: "2025-05",
-      point: 85,
-    },
-    {
-      monthDate: "2025-06",
-      point: 90,
-    },
-    // 아래 있는 데이터 주석 처리 하면 3달 미만으로 검사시 뜨는 텍스트 확인하실 수 있습니다.
-    {
-      monthDate: "2025-07",
-      point: 75,
-    },
-    {
-      monthDate: "2025-08",
-      point: 88,
-    },
-    {
-      monthDate: "2025-09",
-      point: 95,
-    },
-  ],
-  feedback: "지난 달에 비해 점수가 크게 향상되었습니다. 잘하고 있어요!",
-};
+// const data1 = {
+//   yearlyHistory: [
+//     {
+//       monthDate: "2025-05",
+//       point: 85,
+//     },
+//     {
+//       monthDate: "2025-06",
+//       point: 90,
+//     },
+//     // 아래 있는 데이터 주석 처리 하면 3달 미만으로 검사시 뜨는 텍스트 확인하실 수 있습니다.
+//     {
+//       monthDate: "2025-07",
+//       point: 75,
+//     },
+//     {
+//       monthDate: "2025-08",
+//       point: 88,
+//     },
+//     {
+//       monthDate: "2025-09",
+//       point: 95,
+//     },
+//   ],
+//   feedback: "지난 달에 비해 점수가 크게 향상되었습니다. 잘하고 있어요!",
+// };
 
 const DayGraph = () => {
   const theme = useTheme();
+
+  // API 데이터 저장할 State (초기값은 null)
+  const [data, setData] = useState<SixtyDaySkinPointsResponse | null>(null);
+  const [data1, setData1] = useState<YearlyDaySkinPointsResponse | null>(null);
+
+  useEffect(() => {
+    const fectchData = async () => {
+      try {
+        // API 호출에 사용될 데이터 생성
+
+        const today = new Date().toISOString().slice(0, 10);
+        const currentYear = new Date().getFullYear();
+
+        //API 병렬 호출
+        const [result60Days, resultYearly] = await Promise.all([
+          getSkinAnalysisTrends60Days(today),
+          getSkinAnalysisTrendsYearly(currentYear),
+        ]);
+
+        // 받아온 API DATA 저장
+        setData(result60Days);
+        setData1(resultYearly);
+      } catch (error) {
+        console.error("error", error);
+      }
+    };
+
+    fectchData();
+  }, []);
 
   // 이번달 평균 점수에 따른 텍스트를 계산하는 함수
   const getScoreStatusText = (score: number) => {
@@ -74,6 +112,11 @@ const DayGraph = () => {
     }
     return "위험";
   };
+
+  // API 호출은 성공했으나 서버가 null을 반환한 경우 (데이터가 없는 경우)
+  if (!data || !data1) {
+    return <S.LineChartWrapper>분석 기록이 없습니다.</S.LineChartWrapper>;
+  }
 
   // 날짜별, 년도 제거
   const formattedData = data.within60Days.map((item) => ({
