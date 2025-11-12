@@ -2,6 +2,8 @@ import Layout from "@components/commons/layout/Layout";
 import DetailPage from "@pages/detailPage/DetailPage";
 import EditProfile from "@pages/EditProfile/EditProfile";
 import HomePage from "@pages/home/HomePage";
+import CallbackPage from "@pages/login/Callback";
+import LoginPage from "@pages/login/Login";
 import MyPage from "@pages/my/MyPage";
 import RecommendProductPage from "@pages/recommendProduct/RecommendProduct";
 import RecommendStylePage from "@pages/RecommendStyle/RecommendStylePage";
@@ -23,12 +25,14 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Navigate to="home" replace /> },
       { path: "home", element: <HomePage /> },
+      { path: "login", element: <LoginPage /> },
+      { path: "oauth/callback", element: <CallbackPage /> },
       { path: "my", element: <MyPage /> },
       { path: "my/edit", element: <EditProfile /> },
       { path: "my/recommend-style", element: <RecommendStylePage /> },
       { path: "my/wishlist/:analysisId", element: <WishListPage /> },
       { path: "style/recommend", element: <StyleRecommandPage /> },
-      { path: "/detailPage", element: <DetailPage /> },
+      { path: "detail", element: <DetailPage /> },
       { path: "tracking", element: <TrackingPage /> },
       { path: "detail/recommend-product/:analysisId", element: <RecommendProductPage /> },
       { path: "style/ai", element: <ChooseAIStylePage /> },
