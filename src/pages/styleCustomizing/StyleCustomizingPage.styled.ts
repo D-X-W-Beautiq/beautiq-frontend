@@ -10,11 +10,11 @@ import {
 
 /** 전체 화면 */
 export const Screen = styled.div`
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
 
   background-color: ${({ theme }) => theme.colors.white};
-  display: flex;
-  flex-direction: column;
 `;
 
 /** (공통 헤더에서 쓰는 아이콘 크기만 맞춰둠) */
@@ -118,7 +118,6 @@ export const CategoryBtn = styled.button<{ active?: boolean }>`
 
   background: ${({ theme, active }) =>
     active ? theme.colors.primary[400] : theme.colors.primary[50]};
-<<<<<<< HEAD
   box-shadow: ${({ active }) => (active ? "0 4px 10px rgba(237, 71, 133, 0.25)" : "none")};
   border: none;
   border-radius: 50%;
@@ -128,11 +127,6 @@ export const CategoryBtn = styled.button<{ active?: boolean }>`
     background 0.2s ease;
   place-items: center;
 
-=======
-  color: ${({ theme, active }) => (active ? theme.colors.white : theme.colors.primary[400])};
-  box-shadow: ${({ active }) => (active ? "0 4px 10px rgba(237, 71, 133, 0.25)" : "none")};
-  transition: transform 0.1s ease, background 0.2s ease, color 0.2s ease;
->>>>>>> 384e23043d8aca25e36b6a7bb7a2aa52896a931f
   &:active {
     transform: scale(0.97);
   }
@@ -140,9 +134,9 @@ export const CategoryBtn = styled.button<{ active?: boolean }>`
 
 /** ✅ 버튼 안에 들어갈 카테고리 아이콘 (currentColor 사용) */
 export const IconCategory = styled(RawCategoryIcon)`
+  display: block;
   width: 2rem;
   height: 2rem;
-  display: block;
 `;
 
 export const CategoryLabel = styled.div`
@@ -161,12 +155,8 @@ export const ControlWrap = styled.div`
 
 /** 하단 버튼(공통 Button 컴포넌트와 배치만 제공) */
 export const Footer = styled.div`
-<<<<<<< HEAD
   width: 100%;
   margin: auto; /* 👉 버튼을 아래로 밀착 */
-=======
-  margin: auto; /* 기존 로직 유지 */
->>>>>>> 384e23043d8aca25e36b6a7bb7a2aa52896a931f
   place-items: center;
 `;
 
