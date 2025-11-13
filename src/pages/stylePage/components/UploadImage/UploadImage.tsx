@@ -1,4 +1,3 @@
-// src/pages/stylePage/components/UploadImage/UploadImage.tsx
 import Button from "@components/commons/button/Button";
 import type { StyleContentsProps } from "@pages/stylePage/types";
 import React, { useEffect, useRef, useState } from "react";
