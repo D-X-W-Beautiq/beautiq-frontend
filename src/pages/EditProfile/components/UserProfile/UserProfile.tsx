@@ -3,12 +3,6 @@ import { useEffect, useRef, useState } from "react";
 
 import * as S from "./UserProfile.styled";
 
-const tempData = {
-  email: "user@example.com",
-  username: "민우",
-  provider: "kakao", // "kakao" | "google" (서버에서 요청 어떻게 오는지 확인 필요)
-};
-
 const UserProfile = () => {
   const [userName, setUserName] = useState<string>("");
   const [userEmail, setUserEmail] = useState<string | null>(null);

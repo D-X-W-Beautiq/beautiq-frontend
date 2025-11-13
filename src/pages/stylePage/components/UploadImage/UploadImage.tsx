@@ -16,12 +16,7 @@ type UploadImageProps = {
   onUseExisting: () => void;
 };
 
-const UploadImage: React.FC<UploadImageProps> = ({
-  contents,
-  setContents,
-  itemNumber,
-  onUseExisting,
-}) => {
+const UploadImage: React.FC<UploadImageProps> = ({ contents, setContents, itemNumber }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
@@ -66,19 +61,12 @@ const UploadImage: React.FC<UploadImageProps> = ({
       {hasImage ? (
         <S.Preview>
           <img src={previewUrl ?? itemImageUrl ?? ""} alt="이미지 미리보기" />
-          <button
-            className="remove"
-            onClick={removeFile}
-            aria-label="이미지 삭제"
-            type="button"
-          >
-            
+          <button className="remove" onClick={removeFile} aria-label="이미지 삭제" type="button">
             <S.CloseIcon aria-hidden />
           </button>
         </S.Preview>
       ) : (
         <S.Placeholder>
-          
           <S.CamIcon aria-hidden />
         </S.Placeholder>
       )}
@@ -86,12 +74,8 @@ const UploadImage: React.FC<UploadImageProps> = ({
       <S.Hint>* 얼굴이 정면으로 나온 사진을 사용해 주세요.</S.Hint>
 
       <S.BtnRow>
-        <Button size="small" variant="primary" onClick={onUseExisting}>
-          기존 사진 사용하기
-        </Button>
-
         <Button size="small" variant="primary" onClick={openFile}>
-          새 사진 사용하기
+          사진 업로드하기
         </Button>
 
         <input
