@@ -17,7 +17,7 @@ export const postMakeupSimulation = async (
     } else {
       // ② 샘플 URL
       // 백엔드에서 URL을 받는 필드명과 동일해야 함
-      formData.append("styleImageUrl", image);
+      formData.append("styleImageName", image);
     }
 
     // 래핑 여부에 따라 타입 수정해야 함

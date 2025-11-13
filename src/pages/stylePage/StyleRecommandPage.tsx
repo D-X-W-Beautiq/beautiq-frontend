@@ -1,7 +1,7 @@
 import { type MakeupRecommendationRequest, postMakeupRecommendation } from "@apis/domain/makeup/api";
 import Button from "@components/commons/button/Button";
 import Header from "@components/commons/header/Header";
-import type { ContentsProps } from "@pages/stylePage/types";
+import type { StyleContentsProps } from "@pages/stylePage/types";
 import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -35,8 +35,8 @@ const normalize = (s: string) => s.trim();
 const StyleRecommandPage: React.FC = () => {
   const navigate = useNavigate();
 
-  const [contents, setContents] = useState<ContentsProps[]>([
-    { itemId: 0 } as unknown as ContentsProps,
+  const [contents, setContents] = useState<StyleContentsProps[]>([
+    { itemId: 0 } as unknown as StyleContentsProps,
   ]);
   const [isLoading, setLoading] = useState(false);
 
