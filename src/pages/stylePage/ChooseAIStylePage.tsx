@@ -9,18 +9,18 @@ import * as S from "./ChooseAIStylePage.styled";
 
 const DEFAULT_ITEM_INFO: ItemProps = { name: "", content: "", category: "" };
 
-// 🔹 /style/recommend → /style/ai 로 올 때 넘겨주는 state 형태 (대략적인 형태로 넉넉하게)
-type NavState = {
-  recommendData?:
-    | {
-        imageName?: string | null;
-        imageUrl?: string; // 백엔드가 imageUrl로 줄 수도 있고
-        url?: string;      // url로 줄 수도 있으니까 둘 다 대비
-      }[]
-    | null;
+// 🔹 /style/recommend → /style/ai 에서 넘겨줄 때 형태 예시:
+// navigate("/style/ai", { state: { recommendData: res.recommendations } });
+type RecommendItem = {
+   recommendImageName: string;
+  recommendImageUrl: string;
 };
 
-// 샘플 URL 목록 (초기 진입용)
+type NavState = {
+  recommendData?: RecommendItem[] | null;
+};
+
+// 샘플 URL 목록 (백업/초기용)
 const presetUrls = [
   {
     imageName: "sample1",
@@ -41,7 +41,7 @@ const ChooseAIStylePage: React.FC = () => {
   const location = useLocation();
   const navState = (location.state || {}) as NavState;
 
-  // itemId 1~3: URL, 4: 업로드 타일
+  // 기본은 preset 이미지로 시작
   const initial: ContentsProps[] = [
     { itemId: 1, itemImage: presetUrls[0].url, itemInfo: DEFAULT_ITEM_INFO },
     { itemId: 2, itemImage: presetUrls[1].url, itemInfo: DEFAULT_ITEM_INFO },
@@ -63,33 +63,34 @@ const ChooseAIStylePage: React.FC = () => {
 
   const openFile = () => inputRef.current?.click();
 
-  // ✅ recommend 페이지에서 넘어온 AI 추천 이미지로 1~3번 타일 덮어쓰기 (안전하게)
+  // 🔥 recommendData 가 오면 1~3번 타일을 AI 이미지로 덮어쓰기
   useEffect(() => {
-    const raw = navState?.recommendData;
+    const recs = navState?.recommendData;
 
-    // 배열이 아니면(혹은 아예 안 넘어오면) 그냥 preset 그대로 사용
-    if (!Array.isArray(raw) || raw.length === 0) {
+    // 🔥 recommendData 가 배열이 아니면 preset 그대로 사용
+    if (!Array.isArray(recs) || recs.length === 0) {
+      console.log("🔴 recommendData 없음 → preset 유지");
       return;
     }
 
-    setContents((prev) => {
-      const mapped = raw.slice(0, 3).map((rec, idx) => ({
-        itemId: idx + 1,
-        // 🔥 imageUrl / url 둘 다 대응해서 AI가 준 주소를 우선으로
-        itemImage: rec.imageUrl || rec.url || presetUrls[idx]?.url,
-        itemInfo: {
-          ...DEFAULT_ITEM_INFO,
-          name: rec.imageName ?? "",
-        },
-      }));
+    console.log("🟢 recommendData 로 contents 덮어씀:", recs);
 
-      // 4번 타일은 기존 값 유지 (업로드용)
-      const item4 =
-        prev.find((c) => c.itemId === 4) ?? {
-          itemId: 4,
-          itemImage: undefined,
-          itemInfo: DEFAULT_ITEM_INFO,
+    setContents((prev) => {
+      const mapped: ContentsProps[] = recs.slice(0, 3).map((rec, idx) => {
+        const url =
+          rec.recommendImageUrl ??
+          presetUrls[idx].url; // 그래도 없으면 preset fallback
+
+        return {
+          itemId: idx + 1,
+          itemImage: url,
+          itemInfo: { ...DEFAULT_ITEM_INFO, name: rec.recommendImageUrl ?? "" },
         };
+      });
+
+      const item4 =
+        prev.find((c) => c.itemId === 4) ??
+        { itemId: 4, itemImage: undefined, itemInfo: DEFAULT_ITEM_INFO };
 
       return [...mapped, item4];
     });
@@ -97,7 +98,7 @@ const ChooseAIStylePage: React.FC = () => {
 
   const handleFile = (file: File) => {
     setContents((prev) =>
-      prev.map((c) => (c.itemId === 4 ? { ...c, itemImage: file } : c))
+      prev.map((c) => (c.itemId === 4 ? { ...c, itemImage: file } : c)),
     );
     setSelectedId(4); // 업로드 타일 선택
   };
@@ -105,8 +106,8 @@ const ChooseAIStylePage: React.FC = () => {
   const removeFile = () => {
     setContents((prev) =>
       prev.map((c) =>
-        c.itemId === 4 ? { ...c, itemImage: undefined } : c
-      )
+        c.itemId === 4 ? { ...c, itemImage: undefined } : c,
+      ),
     );
     if (previewUrl?.startsWith("blob:")) URL.revokeObjectURL(previewUrl);
     setPreviewUrl(null);
@@ -139,7 +140,7 @@ const ChooseAIStylePage: React.FC = () => {
   }, [contents]);
 
   const uploaded4 = Boolean(
-    contents.find((c) => c.itemId === 4)?.itemImage
+    contents.find((c) => c.itemId === 4)?.itemImage,
   );
 
   // 다음으로 버튼 활성화: 하나 선택 + (4번이면 업로드 있음)
@@ -177,9 +178,9 @@ const ChooseAIStylePage: React.FC = () => {
     try {
       setLoading(true);
 
-      // 🔥 시뮬레이션 API 호출 (File | string 둘 다 지원)
+      // 시뮬레이션 API 호출 (File | string 둘 다 지원)
       const simRes = await postMakeupSimulation(imageToSend);
-      console.log(simRes);
+      console.log("🧪 postMakeupSimulation result:", simRes);
 
       if (!simRes) {
         alert("이미지 시뮬레이션에 실패했습니다.");
@@ -189,10 +190,8 @@ const ChooseAIStylePage: React.FC = () => {
       // simRes: { imageName, imageUrl, ... } 형태라고 가정
       navigate("/style/recommend", {
         state: {
-          // 다음 페이지가 사용할 값들
           originalUrl: simRes.imageUrl, // 프리뷰용
           imageName: simRes.imageName,  // 이후 customize/save에 필요
-          // 필요하면 원본도 넘겨두기 (File만 넘김, URL은 null)
           styleImageFile: imageToSend instanceof File ? imageToSend : null,
         },
       });
@@ -219,7 +218,7 @@ const ChooseAIStylePage: React.FC = () => {
 
           <S.Grid>
             {/* 1~3 URL 타일 */}
-            {contents.slice(0, 3).map((c) => (
+            {contents?.slice(0, 3).map((c) => (
               <S.UrlTile
                 key={c.itemId}
                 role="button"
