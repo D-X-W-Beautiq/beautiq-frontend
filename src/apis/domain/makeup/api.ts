@@ -3,7 +3,7 @@ import type { components } from "@custom-types/api/schema";
 import type { ApiResponseType } from "@custom-types/commonType";
 import type { AxiosResponse } from "axios";
 
-export type MakeupSimulationResponse = components["schemas"]["ImageItem"];  // 동일
+export type MakeupSimulationResponse = components["schemas"]["ImageItem"]; // 동일
 
 /**
  * 1) 시뮬레이션: 원본/참조 이미지 업로드 → S3 URL 반환
