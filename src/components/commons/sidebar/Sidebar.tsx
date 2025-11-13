@@ -1,4 +1,3 @@
-import UserProfile from "@pages/EditProfile/components/UserProfile/UserProfile";
 import { useCallback, useEffect, useState } from "react";
 import { Fragment } from "react/jsx-runtime";
 import { useNavigate } from "react-router-dom";
@@ -31,14 +30,17 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
         const parsed = JSON.parse(userData);
         setIsLogin(true);
         setUserName(parsed.username || parsed.userName || "사용자");
+        setPreviewUrl(parsed.profileImage);
       } catch (error) {
         console.error("Failed to parse user data", error);
         setIsLogin(false);
         setUserName(null);
+        setPreviewUrl(null);
       }
     } else {
       setIsLogin(false);
       setUserName(null);
+      setPreviewUrl(null);
     }
   }, []);
 
