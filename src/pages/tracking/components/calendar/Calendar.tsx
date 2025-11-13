@@ -115,7 +115,7 @@ const Calendar = () => {
       const dailyDates = dailyData?.dailyDates ?? MOCK_DAILY_DATA.DailyDates;
 
       if (dailyDates.length === 1) {
-        navigate("/detailPage", {
+        navigate("/detail", {
           state: {
             id: dailyDates[0],
             dateStr: dateStr,
