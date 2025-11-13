@@ -3,13 +3,24 @@ import Button from "@components/commons/button/Button";
 import Header from "@components/commons/header/Header";
 import type { ContentsProps, ItemProps } from "@pages/stylePage/types";
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import * as S from "./ChooseAIStylePage.styled";
 
 const DEFAULT_ITEM_INFO: ItemProps = { name: "", content: "", category: "" };
 
-// 샘플 URL 목록
+// 🔹 /style/recommend → /style/ai 로 올 때 넘겨주는 state 형태 (대략적인 형태로 넉넉하게)
+type NavState = {
+  recommendData?:
+    | {
+        imageName?: string | null;
+        imageUrl?: string; // 백엔드가 imageUrl로 줄 수도 있고
+        url?: string;      // url로 줄 수도 있으니까 둘 다 대비
+      }[]
+    | null;
+};
+
+// 샘플 URL 목록 (초기 진입용)
 const presetUrls = [
   {
     imageName: "sample1",
@@ -27,6 +38,8 @@ const presetUrls = [
 
 const ChooseAIStylePage: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const navState = (location.state || {}) as NavState;
 
   // itemId 1~3: URL, 4: 업로드 타일
   const initial: ContentsProps[] = [
@@ -49,6 +62,38 @@ const ChooseAIStylePage: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   const openFile = () => inputRef.current?.click();
+
+  // ✅ recommend 페이지에서 넘어온 AI 추천 이미지로 1~3번 타일 덮어쓰기 (안전하게)
+  useEffect(() => {
+    const raw = navState?.recommendData;
+
+    // 배열이 아니면(혹은 아예 안 넘어오면) 그냥 preset 그대로 사용
+    if (!Array.isArray(raw) || raw.length === 0) {
+      return;
+    }
+
+    setContents((prev) => {
+      const mapped = raw.slice(0, 3).map((rec, idx) => ({
+        itemId: idx + 1,
+        // 🔥 imageUrl / url 둘 다 대응해서 AI가 준 주소를 우선으로
+        itemImage: rec.imageUrl || rec.url || presetUrls[idx]?.url,
+        itemInfo: {
+          ...DEFAULT_ITEM_INFO,
+          name: rec.imageName ?? "",
+        },
+      }));
+
+      // 4번 타일은 기존 값 유지 (업로드용)
+      const item4 =
+        prev.find((c) => c.itemId === 4) ?? {
+          itemId: 4,
+          itemImage: undefined,
+          itemInfo: DEFAULT_ITEM_INFO,
+        };
+
+      return [...mapped, item4];
+    });
+  }, [navState?.recommendData]);
 
   const handleFile = (file: File) => {
     setContents((prev) =>
@@ -121,10 +166,10 @@ const ChooseAIStylePage: React.FC = () => {
         return;
       }
     } else {
-      // 1~3번 샘플: URL 그대로 사용
+      // 1~3번 타일: (AI 추천으로 덮였든 샘플이든) URL 그대로 사용
       const c = contents.find((v) => v.itemId === selectedId);
       if (!c || typeof c.itemImage !== "string") return;
-      imageToSend = c.itemImage; // ⭐ URL 문자열 그대로
+      imageToSend = c.itemImage;
     }
 
     if (!imageToSend) return;
@@ -134,7 +179,7 @@ const ChooseAIStylePage: React.FC = () => {
 
       // 🔥 시뮬레이션 API 호출 (File | string 둘 다 지원)
       const simRes = await postMakeupSimulation(imageToSend);
-      console.log(simRes)
+      console.log(simRes);
 
       if (!simRes) {
         alert("이미지 시뮬레이션에 실패했습니다.");
