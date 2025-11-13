@@ -11,64 +11,6 @@ import * as S from "@pages/tracking/components/daygraph/DayGraph.styled";
 import { useEffect, useState } from "react";
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 
-const MOCK_WITHIN60_DATA = {
-  within60Days: [
-    {
-      dayDate: "2025-09-06",
-      point: 0,
-    },
-    {
-      dayDate: "2025-09-07",
-      point: 80,
-    },
-    // 아래있는 데이터를 주석 처리 하면 60일 내에 4회 이상의 피부 측정 기록이 나옵니다.
-    {
-      dayDate: "2025-09-08",
-      point: 60,
-    },
-    {
-      dayDate: "2025-09-09",
-      point: 100,
-    },
-    {
-      dayDate: "2025-09-10",
-      point: 80,
-    },
-  ],
-  currentMonth: {
-    monthDate: "2D025-09",
-    point: 80,
-  },
-};
-
-const MOCK_YEAR_HISTORY_DATA = {
-  yearlyHistory: [
-    {
-      monthDate: "2025-05",
-      point: 85,
-    },
-    {
-      monthDate: "2025-06",
-      point: 90,
-    },
-    // 아래 있는 데이터 주석 처리 하면 3달 미만으로 검사시 뜨는 텍스트 확인하실 수 있습니다.
-    {
-      monthDate: "2025-07",
-      point: 75,
-    },
-    {
-      monthDate: "2025-08",
-      point: 88,
-    },
-    {
-      monthDate: "2025-09",
-      point: 95,
-    },
-  ],
-  feedback: "지난 달에 비해 점수가 크게 향상되었습니다. 잘하고 있어요!",
-  feedbackType: "UPWARD",
-};
-
 const DayGraph = () => {
   const theme = useTheme();
 
@@ -91,8 +33,8 @@ const DayGraph = () => {
         ]);
 
         // 받아온 API DATA 저장
-        setData(result60Days ?? MOCK_WITHIN60_DATA);
-        setData1(resultYearly ?? MOCK_YEAR_HISTORY_DATA);
+        setData(result60Days);
+        setData1(resultYearly);
       } catch (error) {
         console.error("error", error);
       }
@@ -112,26 +54,21 @@ const DayGraph = () => {
     return "위험";
   };
 
-  // API 호출은 성공했으나 서버가 null을 반환한 경우 (데이터가 없는 경우)
-  if (!data || !data1) {
-    return <S.LineChartWrapper>분석 기록이 없습니다.</S.LineChartWrapper>;
-  }
-
   // 날짜별, 년도 제거
-  const formattedData = data.within60Days.map((item) => ({
+  const formattedData = data?.within60Days.map((item) => ({
     ...item,
     dayDate: item.dayDate.substring(5), // "09-06"
   }));
 
   // 월별, "월" 문자열 추가
-  const formattedData1 = data1.yearlyHistory.map((item) => ({
+  const formattedData1 = data1?.yearlyHistory.map((item) => ({
     ...item,
     dayDate: item.monthDate.substring(5) + "월", // "05월"
   }));
 
-  const show60DayChart = formattedData.length >= 4;
+  const show60DayChart = (formattedData?.length ?? 0) >= 4;
 
-  const showMonthChart = formattedData1.length >= 3;
+  const showMonthChart = (formattedData1?.length ?? 0) >= 3;
 
   return (
     <>
@@ -191,9 +128,9 @@ const DayGraph = () => {
             <S.LineCharAvgtWrapper>
               <S.AvgLeft>이번달 평균</S.AvgLeft>
               <S.AvgRightWrapper>
-                <S.AvgRightText>{data.currentMonth.point}점</S.AvgRightText>
-                <S.AvgRightContent score={data.currentMonth.point}>
-                  {getScoreStatusText(data.currentMonth.point)}
+                <S.AvgRightText>{data?.currentMonth.point}점</S.AvgRightText>
+                <S.AvgRightContent score={data?.currentMonth.point ?? 0}>
+                  {getScoreStatusText(data?.currentMonth.point ?? 0)}
                 </S.AvgRightContent>
               </S.AvgRightWrapper>
             </S.LineCharAvgtWrapper>
@@ -260,7 +197,7 @@ const DayGraph = () => {
 
             <S.FeedBackWrapper>
               <S.FeedBackTitle>피부 분석 인사이트</S.FeedBackTitle>
-              <S.FeedBackText>{data1.feedback}</S.FeedBackText>
+              <S.FeedBackText>{data1?.feedback}</S.FeedBackText>
             </S.FeedBackWrapper>
           </>
         ) : (

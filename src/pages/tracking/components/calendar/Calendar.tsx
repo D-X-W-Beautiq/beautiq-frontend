@@ -26,18 +26,6 @@ interface CustomPickersDayProps extends PickersDayProps {
   DailyDates?: DailyDate[];
 }
 
-// (키: MonthlySkinStatus -> monthlyHistory, createAt -> dayDate)
-const MOCK_CALENDAR_DATA: MonthlySkinStatusResponse = {
-  monthlyHistory: [
-    { skinStatus: "CAUTION", dayDate: "2025-09-10" },
-    { skinStatus: "CAUTION", dayDate: "2025-11-10" },
-    { skinStatus: "GOOD", dayDate: "2025-11-25" },
-    { skinStatus: "CAUTION", dayDate: "2025-11-26" },
-    { skinStatus: "DANGER", dayDate: "2025-11-27" },
-    { skinStatus: "CAUTION", dayDate: "2025-11-27" },
-  ],
-};
-
 // 개별 날짜 커스텀 스타일
 const CustomDay = MUIstyled(PickersDay, { shouldForwardProp: (prop) => prop !== "skinStatus" })<{
   skinStatus?: SkinStatusType;
@@ -83,10 +71,10 @@ const Calendar = () => {
         const month = currentViewMonth.month() + 1;
 
         const data = await getSkinAnalysisMonthly(year, month);
-        setMonthlyData(data ?? MOCK_CALENDAR_DATA);
+        setMonthlyData(data);
       } catch (error) {
         console.error("getSkinAnalysisMonthly 호출 과정에서 문제 발생 :", error);
-        setMonthlyData(MOCK_CALENDAR_DATA);
+        // setMonthlyData(MOCK_CALENDAR_DATA);
       }
     };
 
@@ -105,19 +93,13 @@ const Calendar = () => {
 
     // 활성화된 날짜 클릭시 호출되는 이벤트 리스너
     const handleClickCalendar = async () => {
-      const MOCK_DAILY_DATA = {
-        DailyDates: [
-          { id: "a", date: "2025-10-27T09:12" },
-          { id: "b", date: "2025-10-27T10:12" },
-        ],
-      };
       const dailyData = await getSkinAnalysisDaily(dateStr); // getSkinAnalysisDaily 응답 데이터
-      const dailyDates = dailyData?.dailyDates ?? MOCK_DAILY_DATA.DailyDates;
+      const dailyDates = dailyData?.dailyDates ?? [];
 
       if (dailyDates.length === 1) {
         navigate("/detail", {
           state: {
-            id: dailyDates[0],
+            id: dailyDates[0].id,
             dateStr: dateStr,
           },
         });
