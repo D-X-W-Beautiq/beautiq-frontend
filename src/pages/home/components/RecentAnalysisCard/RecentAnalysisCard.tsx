@@ -77,9 +77,9 @@ const RecentAnalysisCard = () => {
             </S.DateText>
           </S.ItemInfo>
           <S.BadgeContainer>
-            {makeupData?.makeUps?.map((item) => {
-              return <S.Badge>{item.keywords}</S.Badge>;
-            })}
+            {makeupData?.makeUps?.[0]?.keywords?.slice(0, 2).map((keyword) => (
+              <S.Badge key={keyword}>{keyword}</S.Badge>
+            ))}
           </S.BadgeContainer>
         </S.ResultBox>
       ) : (

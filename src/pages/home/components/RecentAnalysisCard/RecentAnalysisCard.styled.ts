@@ -73,7 +73,7 @@ export const Badge = styled.div<{ score?: number }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.2rem 1.6rem;
+  padding: 0.2rem 1rem;
 
   color: ${({ theme }) => theme.colors.white};
   font-weight: 500;
