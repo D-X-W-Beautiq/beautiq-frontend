@@ -73,7 +73,7 @@ export const postMakeupSave = async (
   try {
     const formData = new FormData();
     formData.append("imageName", imageName);
-    const payload = { data: { keywords: data } };
+    const payload = { keywords: data };
     formData.append("data", new Blob([JSON.stringify(payload)], { type: "application/json" }));
 
     const response: AxiosResponse<void> = await post("/makeup/save", formData);
