@@ -14,12 +14,7 @@ const AccountActions = () => {
       comment: "로그아웃 후 서비스 사용 시 재로그인 해야 합니다.",
       okCallback: async () => {
         try {
-          const response = await postLogout();
-
-          if (response === null) {
-            alert("로그아웃 요청에 실패했습니다.");
-            return;
-          }
+          await postLogout();
 
           localStorage.removeItem("user");
           window.location.href = "/login";
